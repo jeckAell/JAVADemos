@@ -11,21 +11,21 @@ import java.util.concurrent.CountDownLatch;
  * @create: 2020-01-03 09:53
  */
 public class CountDownLachDemo {
-//    public static void main(String[] args) throws InterruptedException {
-//        // 在这个倒计时计数器中，初始化为线程数6
-//        CountDownLatch countDownLatch = new CountDownLatch(6);
-//        // 再举个例子，秦国统一六国，结合枚举类型，将1-6个数字分别对应相应的国家名字，在下面的6个线程中，要将线程的名字定义成国家的名字。
-//        for (int i = 1; i <= 6; i++) {
-//            new Thread(() -> {
-//                System.out.println(Thread.currentThread().getName() + "国被灭");
-//                // 当执行完一个线程后，将计数器减一
-//                countDownLatch.countDown();
-//            }, Country.find_counntry(i).getCountryName()).start();
-//        }
-//
-//        countDownLatch.await();
-//        System.out.println(Thread.currentThread().getName() + "\t 秦国统一");
-//    }
+    public static void main(String[] args) throws InterruptedException {
+        // 在这个倒计时计数器中，初始化为线程数6
+        CountDownLatch countDownLatch = new CountDownLatch(6);
+        // 再举个例子，秦国统一六国，结合枚举类型，将1-6个数字分别对应相应的国家名字，在下面的6个线程中，要将线程的名字定义成国家的名字。
+        for (int i = 1; i <= 6; i++) {
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + "国被灭");
+                // 当执行完一个线程后，将计数器减一
+                countDownLatch.countDown();
+            }, Country.find_counntry(i).getCountryName()).start();
+        }
+
+        countDownLatch.await();
+        System.out.println(Thread.currentThread().getName() + "\t 秦国统一");
+    }
 
     private static void closeDoor() throws InterruptedException {
         // 在这个倒计时计数器中，初始化为线程数5

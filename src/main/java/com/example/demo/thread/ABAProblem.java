@@ -1,6 +1,9 @@
 package com.example.demo.thread;
 
-import java.sql.Time;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.catalina.User;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicStampedReference;
@@ -16,7 +19,7 @@ public class ABAProblem {
         System.out.println("================ABA问题的出现===================");
         AtomicReference<Integer> atomicReference = new AtomicReference<>(20);
         new Thread(() -> {
-            // 修改原子类型的值,compareAndSet(v1,v2); 如果当前值是V1,则修改当前值为V2 , todo 试试传入对象
+            // 修改原子类型的值,compareAndSet(v1,v2); 如果当前值是V1,则修改当前值为V2
             System.out.println("操作了一次");
             atomicReference.compareAndSet(20,21);
             System.out.println("操作了一次");
@@ -67,5 +70,27 @@ public class ABAProblem {
             System.out.println(stampedReference.getStamp() + " 当前值为：" + stampedReference.getReference());
         },"T4").start();
 
+
+        System.out.println("====================原子类封装对像===================");
+        UserDemo userDemo = new UserDemo();
+        userDemo.setAge(12);
+        userDemo.setName("leitao");
+
+        AtomicReference<UserDemo> userReference = new AtomicReference<>(userDemo);
+
+        UserDemo userDemo1 = new UserDemo();
+        userDemo1.setName("xiaowang");
+        userDemo1.setAge(20);
+        userReference.compareAndSet(userDemo,userDemo1);
+        UserDemo u = userReference.get();
+        System.out.println("now user name is "+ userReference.get().getName());
+        System.out.println("now user age is "+ userReference.get().getAge());
     }
+}
+
+@Getter
+@Setter
+class UserDemo {
+    private String name;
+    private int age;
 }

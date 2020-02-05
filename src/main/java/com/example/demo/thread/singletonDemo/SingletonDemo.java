@@ -1,4 +1,4 @@
-package com.example.demo.thread;
+package com.example.demo.thread.singletonDemo;
 
 /**
  * @description: 多线程下的单例模式
